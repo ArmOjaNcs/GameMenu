@@ -14,7 +14,9 @@ public class LoadingWindow : MonoBehaviour
     private Vector2 _targetPosition;
     private Vector2 _startShift;
     private Vector2 _endShift;
-    private Tween _animation;
+    private Tween _imageAnimation;
+    private Tween _show;
+    private Tween _hide;
     private WaitForSeconds _wait;
     private bool _isFirstStart = true;
 
@@ -23,9 +25,12 @@ public class LoadingWindow : MonoBehaviour
         if (_isFirstStart)
         {
             _targetPosition = _rectTransform.anchoredPosition;
-            _startShift = new Vector2(_targetPosition.x, -Screen.height);
-            _endShift = new Vector2(_targetPosition.x, Screen.height);
+            _startShift = new Vector2(_targetPosition.x, -Screen.height * 2);
+            _endShift = new Vector2(_targetPosition.x, Screen.height * 2);
             _wait = new WaitForSeconds(Delay);
+            _show = _rectTransform.DOAnchorPos(_targetPosition, 0.5f).From(_startShift).SetAutoKill(false);
+            _hide = _rectTransform.DOAnchorPos(_endShift, 0.5f).From(_targetPosition)
+                .OnComplete(() => gameObject.SetActive(false)).SetAutoKill(false);
         }
     }
 
@@ -41,20 +46,24 @@ public class LoadingWindow : MonoBehaviour
 
     private void AnimateImage()
     {
-        _animation = _loadingImage.transform.DORotate(new Vector3(0, 0, 360), 1.5f, RotateMode.FastBeyond360).SetLoops(-1).SetEase(Ease.Linear);
+        if (_imageAnimation != null)
+            _imageAnimation.Restart();
+        else
+            _imageAnimation = _loadingImage.transform.DORotate(new Vector3(0, 0, 360), 1.5f, RotateMode.FastBeyond360)
+                .SetLoops(-1).SetEase(Ease.Linear).Play();
     }
 
     private void Show()
     {
-        _rectTransform.DOAnchorPos(_targetPosition, 0.5f).From(_startShift);
+        _show.Restart();
     }
 
     private void Hide()
     {
-        if(_animation != null)
-            _animation.Kill();
-
-        _rectTransform.DOAnchorPos(_endShift, 0.5f).From(_targetPosition).OnComplete(() => gameObject.SetActive(false));
+        if (_imageAnimation != null)
+            _imageAnimation.Pause();
+        
+        _hide.Restart();
     }
 
     private void OffLoading()
