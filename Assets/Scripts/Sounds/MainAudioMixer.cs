@@ -3,39 +3,28 @@ using UnityEngine.Audio;
 
 public class MainAudioMixer : MonoBehaviour
 {
+    private const float MinVolume = -80;
+
     [SerializeField] private AudioMixerGroup _masterAudioGroup;
-    [SerializeField] private AudioUIElemets _audioUIElements;
 
     private float _currentMasterVolume;
-
-    private void OnEnable()
+    
+    public void SetFloatBySliderValue(string nameOfSource, float volume)
     {
-        _audioUIElements.SliderValueChanged += OnSliderValueChanged;
-        _audioUIElements.ToggleValueChanged += OnToggleValueChanged;
+        if(nameOfSource == MixerTypes.MasterVolume.ToString())
+            _currentMasterVolume = volume;
+
+        SetFloat(nameOfSource, volume);
     }
 
-    private void OnDisable()
+    public void SetFloatByToggle(bool isEnabled)
     {
-        _audioUIElements.SliderValueChanged -= OnSliderValueChanged;
-        _audioUIElements.ToggleValueChanged -= OnToggleValueChanged;
+        float volume = isEnabled ? _currentMasterVolume : MinVolume;
+        SetFloat(MixerTypes.MasterVolume.ToString(), volume);
     }
 
     private void SetFloat(string nameOfSource, float volume)
     {
         _masterAudioGroup.audioMixer.SetFloat(nameOfSource, volume);
-    }
-
-    private void OnSliderValueChanged(SliderData sliderData)
-    {
-        if(sliderData.SourceName == AudioInfo.MasterVolume)
-            _currentMasterVolume = sliderData.Value;
-
-        SetFloat(sliderData.SourceName, sliderData.Value);
-    }
-
-    private void OnToggleValueChanged(ToggleData toggleData)
-    {
-        float volume = toggleData.IsEnabled ? _currentMasterVolume : AudioInfo.MinVolume;
-        SetFloat(toggleData.SourceName, volume);
     }
 }
