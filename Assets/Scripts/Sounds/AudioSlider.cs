@@ -7,7 +7,7 @@ public class AudioSlider : MonoBehaviour
 
     [SerializeField] private Slider _slider;
     [SerializeField] private MainAudioMixer _audioMixer;
-    [SerializeField] private MixerTypes _mixerType;
+    [SerializeField] private AudioSourceTypes _audioSourceType;
 
     private void OnEnable()
     {
@@ -27,7 +27,7 @@ public class AudioSlider : MonoBehaviour
     private void OnValueChanged(float volume)
     {
         float correctedVolume = GetCorrectVolume(volume);
-        string nameOfSource = _mixerType.ToString();
+        string nameOfSource = _audioSourceType.ToString();
         _audioMixer.SetFloatBySliderValue(nameOfSource, correctedVolume);
     }
 

@@ -11,7 +11,7 @@ public class MainAudioMixer : MonoBehaviour
     
     public void SetFloatBySliderValue(string nameOfSource, float volume)
     {
-        if(nameOfSource == MixerTypes.MasterVolume.ToString())
+        if(nameOfSource == AudioSourceTypes.MasterVolume.ToString())
             _currentMasterVolume = volume;
 
         SetFloat(nameOfSource, volume);
@@ -20,7 +20,7 @@ public class MainAudioMixer : MonoBehaviour
     public void SetFloatByToggle(bool isEnabled)
     {
         float volume = isEnabled ? _currentMasterVolume : MinVolume;
-        SetFloat(MixerTypes.MasterVolume.ToString(), volume);
+        SetFloat(AudioSourceTypes.MasterVolume.ToString(), volume);
     }
 
     private void SetFloat(string nameOfSource, float volume)
