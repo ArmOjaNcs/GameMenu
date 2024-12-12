@@ -1,4 +1,4 @@
-public enum AudioSourceTypes 
+public enum MixerSourceTypes 
 {
     MasterVolume,
     ButtonsVolume,

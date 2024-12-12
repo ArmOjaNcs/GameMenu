@@ -2509,7 +2509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 1143789835}
   _audioMixer: {fileID: 391629224}
-  _audioSourceType: 1
+  _mixerSourceType: 1
 --- !u!1 &570751488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,7 +2692,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 1320958910}
   _audioMixer: {fileID: 391629224}
-  _audioSourceType: 2
+  _mixerSourceType: 2
 --- !u!1 &604283704
 GameObject:
   m_ObjectHideFlags: 0
@@ -6528,7 +6528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 2064204917}
   _audioMixer: {fileID: 391629224}
-  _audioSourceType: 0
+  _mixerSourceType: 0
 --- !u!1 &1764568279
 GameObject:
   m_ObjectHideFlags: 0
